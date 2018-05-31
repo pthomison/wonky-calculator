@@ -1,5 +1,7 @@
-node("docker-host") {
-  stage("echo") {
+node("s2i-host") {
+  stage("image construction") {
     println("Hello World; This is a build")
+    println("Beginning S2I Build")
+    sh 'ls'
   }
 }
