@@ -1,0 +1,5 @@
+node("docker-host") {
+  stage("echo") {
+    println("Hello World; This is a deployment")
+  }
+}
