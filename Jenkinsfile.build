@@ -3,8 +3,19 @@ node("s2i-host") {
     println("Hello World; This is a build")
     println("Beginning S2I Build")
     checkout scm
-    sh 'ls'
-    sh 's2i build . centos/nodejs-8-centos7 wonky-calculator'
-    sh ''
+
+    sh 's2i build . centos/nodejs-8-centos7 quay.io/pthomison/wonky-calculator:latest'
+
+    withCredentials([usernamePassword(credentialsId: 'quay_creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+      sh 'docker login quay.io -u $USERNAME -p $PASSWORD'
+      sh 'docker push quay.io/pthomison/wonky-calculator:latest'
+      // available as an env variable, but will be masked if you try to print it out any which way
+      // note: single quotes prevent Groovy interpolation; expansion is by Bourne Shell, which is what you want
+      sh 'echo $PASSWORD'
+      // also available as a Groovy variable
+      echo USERNAME
+      // or inside double quotes for string interpolation
+      echo "username is $USERNAME"
+    }
   }
 }
