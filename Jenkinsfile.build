@@ -4,6 +4,7 @@ node("s2i-host") {
     println("Beginning S2I Build")
     checkout scm
     sh 'ls'
-    sh 's2i build . registry.access.redhat.com/rhoar-nodejs/nodejs-8 wonky-calculator'
+    sh 's2i build . centos/nodejs-8-centos7 wonky-calculator'
+    sh ''
   }
 }
